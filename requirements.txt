@@ -1,0 +1,7 @@
+flask
+torch
+torchvision
+transformers
+scikit-learn
+joblib
+gunicorn
