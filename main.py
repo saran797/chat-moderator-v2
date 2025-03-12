@@ -7,17 +7,21 @@ from transformers import AutoTokenizer
 from model import BiLSTMModel  # Import your BiLSTM model
 
 app = Flask(__name__)
-
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# Define model parameters
+INPUT_DIM = 768  # RoBERTa embeddings size
+HIDDEN_DIM = 256  # LSTM hidden size
+NUM_LAYERS = 2  # Number of BiLSTM layers
+OUTPUT_DIM = 256  # Output feature size
 
-MODEL_DIR = "model"
+MODEL_DIR = "models"
 os.makedirs(MODEL_DIR, exist_ok=True)
 
-# Load BiLSTM Model
-lstm_model = BiLSTMModel()
-lstm_model.load_state_dict(torch.load(f"models/bilstm_model.pth", map_location=device))
+# Initialize model
+lstm_model = BiLSTMModel(INPUT_DIM, HIDDEN_DIM, NUM_LAYERS, OUTPUT_DIM)
+lstm_model.load_state_dict(torch.load(f"{MODEL_DIR}/bilstm_model_v2.pth", map_location=device))
 lstm_model.to(device)
-lstm_model.eval()
+lstm_model.eval()  # Set to evaluation mode
 
 # Load Random Forest Model
 rf_model = joblib.load(f"models/random_forest_model.pkl")
