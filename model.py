@@ -1,3 +1,5 @@
+import torch
+
 class BiLSTMModel(torch.nn.Module):
     def __init__(self, input_dim, hidden_dim, num_layers, output_dim):
         super(BiLSTMModel, self).__init__()
