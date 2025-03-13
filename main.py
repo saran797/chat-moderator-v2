@@ -10,7 +10,7 @@ app = Flask(__name__)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # Define model parameters
 INPUT_DIM = 768  # RoBERTa embeddings size
-HIDDEN_DIM = 256  # LSTM hidden size
+HIDDEN_DIM = 128  # LSTM hidden size
 NUM_LAYERS = 2  # Number of BiLSTM layers
 OUTPUT_DIM = 256  # Output feature size
 
