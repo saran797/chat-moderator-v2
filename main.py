@@ -4,7 +4,7 @@ import os
 import numpy as np
 from flask import Flask, request, jsonify
 from transformers import AutoTokenizer
-from model import BiLSTMModel  # Import your BiLSTM model
+from model import BiLSTMFeatureExtractor # Import your BiLSTM model
 
 app = Flask(__name__)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -16,7 +16,7 @@ MODEL_DIR = "models"
 os.makedirs(MODEL_DIR, exist_ok=True)
 
 # Initialize model
-lstm_model = BiLSTMModel(INPUT_DIM, HIDDEN_DIM, NUM_LAYERS, OUTPUT_DIM)
+lstm_model = BiLSTMFeatureExtractor(embedding_dim,hidden_dim)
 lstm_model.load_state_dict(torch.load(f"{MODEL_DIR}/bilstm_model_v2.pth", map_location=device))
 lstm_model.to(device)
 lstm_model.eval()  # Set to evaluation mode
