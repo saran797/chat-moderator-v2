@@ -1,12 +1,14 @@
 import torch
 
-class BiLSTMModel(torch.nn.Module):
-    def __init__(self, input_dim, hidden_dim, num_layers, output_dim):
-        super(BiLSTMModel, self).__init__()
-        self.lstm = torch.nn.LSTM(input_dim, hidden_dim, num_layers, batch_first=True, bidirectional=True)
-        self.fc = torch.nn.Linear(hidden_dim * 2, output_dim)
+class BiLSTM(torch.nn.Module):
+    def __init__(self, embedding_dim, hidden_dim, num_classes):
+        super(BiLSTM, self).__init__()
+        self.hidden_dim = hidden_dim
+        self.lstm = nn.LSTM(embedding_dim, hidden_dim, bidirectional=True, batch_first=True)
+        self.fc = nn.Linear(hidden_dim * 2, num_classes)  # Fully connected layer for classification
 
     def forward(self, x):
-        lstm_out, _ = self.lstm(x)
-        features = lstm_out[:, -1, :]
-        return features
+        lstm_out, _ = self.lstm(x.unsqueeze(1))  # Add batch dimension
+        lstm_out = lstm_out[:, -1, :]  # Take the last time step
+        output = self.fc(lstm_out)
+        return output
