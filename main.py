@@ -9,10 +9,8 @@ from model import BiLSTMModel  # Import your BiLSTM model
 app = Flask(__name__)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # Define model parameters
-INPUT_DIM = 768  # RoBERTa embeddings size
-HIDDEN_DIM = 128  # LSTM hidden size
-NUM_LAYERS = 2  # Number of BiLSTM layers
-OUTPUT_DIM = 256  # Output feature size
+embedding_dim = 768  # BERT embeddings
+hidden_dim = 128
 
 MODEL_DIR = "models"
 os.makedirs(MODEL_DIR, exist_ok=True)
